@@ -1,9 +1,9 @@
-import {SimpleSortCriteria} from "../types";
+import {SortCriteria} from "../types";
 
-export function simpleAdvancedSort(
-  arr: any[],
-  criteria: SimpleSortCriteria
-): any[] {
+export function advancedSort<ItemType extends object>(
+  arr: ItemType[],
+  criteria: SortCriteria<ItemType>
+): ItemType[] {
   return [...arr].sort((a, b) => {
     for (const key in criteria) {
       const {direction, customCompare} = criteria[key] || {};

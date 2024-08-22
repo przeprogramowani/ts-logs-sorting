@@ -14,9 +14,14 @@ export interface LogEntry {
   userId?: number;
 }
 
-export type SimpleSortCriteria = {
-  [key: string]: {
+export type CustomCompareFunction<ItemTypeValue> = (
+  a: ItemTypeValue,
+  b: ItemTypeValue
+) => number;
+
+export type SortCriteria<ItemType extends object> = {
+  [Key in keyof ItemType]?: {
     direction: "asc" | "desc";
-    customCompare?: (a: any, b: any) => number;
+    customCompare?: CustomCompareFunction<ItemType[Key]>;
   };
 };

@@ -1,10 +1,10 @@
-import {SimpleSortCriteria} from "../types";
+import {LogEntry, SortCriteria} from "../types";
 
 interface LogSortingHeaderProps {
-  field: string;
+  field: keyof LogEntry;
   label: string;
-  sortCriteria: SimpleSortCriteria;
-  toggleSort: (key: string) => void;
+  sortCriteria: SortCriteria<LogEntry>;
+  toggleSort: (key: keyof LogEntry) => void;
   className?: string;
 }
 

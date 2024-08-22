@@ -1,7 +1,7 @@
-import {LogLevel, LogSource} from "../types";
+import {LogEntry, LogLevel, LogSource} from "../types";
 
 export const LogEntryFields: {
-  key: string;
+  key: keyof LogEntry;
   label: string;
   className?: string;
 }[] = [
@@ -12,7 +12,7 @@ export const LogEntryFields: {
   {key: "userId", label: "User ID", className: "min-w-24"},
 ];
 
-export const LogLevelOrder: {[key: string]: number} = {
+export const LogLevelOrder: Record<LogLevel, number> = {
   ERROR: 3,
   WARNING: 2,
   INFO: 1,

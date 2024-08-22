@@ -2,22 +2,22 @@ import {useMemo, useState} from "react";
 import {LogLevelBadge} from "./components/LogLevelBadge";
 import {LogSortingHeader} from "./components/LogSortingHeader";
 import {LogEntryFields, LogLevelOrder} from "./constants";
-import {simpleAdvancedSort} from "./services/logProcessing";
-import {LogEntry, SimpleSortCriteria} from "./types";
+import {advancedSort} from "./services/logProcessing";
+import {LogEntry, LogLevel, SortCriteria} from "./types";
 
 interface LogDashboardProps {
   logs: LogEntry[];
 }
 
 function LogDashboard({logs}: LogDashboardProps) {
-  const [sortCriteria, setSortCriteria] = useState<SimpleSortCriteria>({
+  const [sortCriteria, setSortCriteria] = useState<SortCriteria<LogEntry>>({
     timestamp: {direction: "desc"},
   });
 
-  const compareLogLevels = (a: string, b: string) =>
+  const compareLogLevels = (a: LogLevel, b: LogLevel) =>
     LogLevelOrder[a] - LogLevelOrder[b];
 
-  const toggleSort = (key: string) => {
+  const toggleSort = (key: keyof LogEntry) => {
     setSortCriteria((prev) => {
       const direction = prev[key]?.direction === "asc" ? "desc" : "asc";
       const baseCriteria = {direction} as const;
@@ -32,7 +32,7 @@ function LogDashboard({logs}: LogDashboardProps) {
   };
 
   const sortedLogs = useMemo(() => {
-    return simpleAdvancedSort(logs, sortCriteria);
+    return advancedSort(logs, sortCriteria);
   }, [logs, sortCriteria]);
 
   return (
